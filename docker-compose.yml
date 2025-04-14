@@ -3,37 +3,37 @@ version: '3.8'
 services:
   db:
     image: mysql:8
-    container_name: mysql-wordpress
+    container_name: mysql-joomla
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress_db
-      MYSQL_USER: wp_user
-      MYSQL_PASSWORD: wp_pass
+      MYSQL_DATABASE: joomla_db
+      MYSQL_USER: joomla_user
+      MYSQL_PASSWORD: joomla_pass
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - wp_net
+      - joomla_net
 
-  wordpress:
-    image: wordpress:latest
-    container_name: wordpress-app
+  joomla:
+    image: joomla:latest
+    container_name: joomla-app
     restart: always
     ports:
       - "8080:80"
     environment:
-      WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_NAME: wordpress_db
-      WORDPRESS_DB_USER: wp_user
-      WORDPRESS_DB_PASSWORD: wp_pass
+      JOOMLA_DB_HOST: db
+      JOOMLA_DB_NAME: joomla_db
+      JOOMLA_DB_USER: joomla_user
+      JOOMLA_DB_PASSWORD: joomla_pass
     volumes:
-      - wp_data:/var/www/html
+      - joomla_data:/var/www/html
     networks:
-      - wp_net
+      - joomla_net
 
 volumes:
   db_data:
-  wp_data:
+  joomla_data:
 
 networks:
-  wp_net:
+  joomla_net:
